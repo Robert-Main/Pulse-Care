@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { E164Number } from "libphonenumber-js/core";
 import Image from "next/image";
-import ReactDatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Control } from "react-hook-form";
 import PhoneInput from "react-phone-number-input";
 
@@ -43,7 +44,14 @@ interface CustomProps {
 }
 
 const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
-    const { fieldType, iconAlt, iconSrc, placeholder } = props;
+    const {
+        fieldType,
+        iconAlt,
+        iconSrc,
+        placeholder,
+        showTimeSelect,
+        dateFormat,
+    } = props;
     switch (props.fieldType) {
         case FormFieldType.INPUT:
             return (
@@ -117,13 +125,13 @@ const RenderInput = ({ field, props }: { field: any; props: CustomProps }) => {
                         className="ml-2"
                     />
                     <FormControl>
-                        <ReactDatePicker
-                            showTimeSelect={props.showTimeSelect ?? false}
+                        <DatePicker
                             selected={field.value}
-                            // onChange={(date: Date) => field.onChange(date)}
-                            timeInputLabel="Time:"
-                            dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
+                            onChange={(date) => field.onChange(date)}
                             wrapperClassName="date-picker"
+                            dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                            showTimeSelect={showTimeSelect ?? false}
+                            timeInputLabel="Time:"
                         />
                     </FormControl>
                 </div>

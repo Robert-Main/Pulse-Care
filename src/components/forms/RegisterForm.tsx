@@ -6,6 +6,7 @@ import {
     IdentificationTypes,
     PatientFormDefaultValues,
 } from "@/constants";
+import { registerPatient } from "@/lib/actions/patient.actions";
 import { PatientFormValidation } from "@/types/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -80,11 +81,11 @@ const RegisterForm = ({ user }: { user: User }) => {
                 privacyConsent: values.privacyConsent,
             };
 
-            // const newPatient = await registerPatient(patient);
+            const newPatient = await registerPatient(patient);
 
-            // if (newPatient) {
-            //     router.push(`/patients/${user.$id}/new-appointment`);
-            // }
+            if (newPatient) {
+                router.push(`/patients/${user.$id}/new-appointment`);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -116,6 +117,7 @@ const RegisterForm = ({ user }: { user: User }) => {
                         fieldType={FormFieldType.INPUT}
                         control={form.control}
                         name="name"
+                        label=" Full name"
                         placeholder="John Doe"
                         iconSrc="/assets/icons/user.svg"
                         iconAlt="user"
